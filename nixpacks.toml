@@ -1,8 +1,8 @@
-[phases.setup]
-nixPkgs = ["python311", "python311Packages.pip", "gcc"]
+# Let Nixpacks auto-detect providers and add Python
+providers = ["python"]
 
-[phases.install]
-cmds = ["python3.11 -m pip install -r requirements.txt"]
+[variables]
+PYTHON_VERSION = "3.11"
 
 [start]
-cmd = "python3.11 manage.py migrate --noinput && python3.11 manage.py createcachetable --verbosity 0 || true && python3.11 manage.py collectstatic --noinput && gunicorn config.wsgi --bind 0.0.0.0:$PORT --timeout 120"
+cmd = "python manage.py migrate --noinput && python manage.py createcachetable --verbosity 0 || true && python manage.py collectstatic --noinput && gunicorn config.wsgi --bind 0.0.0.0:$PORT --timeout 120"
