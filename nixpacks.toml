@@ -1,8 +1,10 @@
-# Let Nixpacks auto-detect providers and add Python
 providers = ["python"]
 
 [variables]
 PYTHON_VERSION = "3.11"
 
+[phases.setup]
+nixPkgs = ["bash", "coreutils"]
+
 [start]
-cmd = "python manage.py migrate --noinput && python manage.py createcachetable --verbosity 0 || true && python manage.py collectstatic --noinput && gunicorn config.wsgi --bind 0.0.0.0:$PORT --timeout 120"
+cmd = "bash -c 'python manage.py migrate --noinput && python manage.py createcachetable --verbosity 0 || true && python manage.py collectstatic --noinput && gunicorn config.wsgi --bind 0.0.0.0:$PORT --timeout 120'"
