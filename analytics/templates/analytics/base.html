@@ -1,0 +1,282 @@
+{% load static %} <!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Media Scope{% endblock %}</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+    
+    <style>
+        :root {
+            --bg-color: #2D2D3A;
+            --sidebar-bg: #22222D;
+            --card-bg: #353542;
+            --text-color: #F1F1F1;
+            --text-muted: #A0A0A0;
+            --primary: #9D4EDD; /* Roxo principal */
+            --secondary: #9d4edd; /* Rosa/Pink */
+            --green: #00C49F;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* --- Sidebar --- */
+        .sidebar {
+            width: 80px; /* Largura da sidebar de ícones */
+            background-color: var(--sidebar-bg);
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-right: 1px solid #444;
+        }
+        
+        /* --- 2. CSS DA LOGO ATUALIZADO --- */
+        .sidebar-logo {
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .logo-img {
+            width: 50px; /* Tamanho ideal para a sidebar de 80px */
+            height: auto; /* Mantém a proporção */
+            filter: drop-shadow(0 0 5px rgba(157, 78, 221, 0.3)); /* Um brilho sutil roxo */
+            transition: transform 0.2s;
+        }
+        
+        .logo-img:hover {
+            transform: scale(1.1); /* Efeito de zoom ao passar o mouse */
+        }
+
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .sidebar-footer {
+            margin-top: auto; /* Joga para o fim */
+        }
+        .sidebar-footer a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 1.8rem;
+            padding: 10px;
+        }
+        .sidebar-footer a:hover {
+            color: var(--secondary);
+        }
+
+        /* --- Main Content --- */
+        .main-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+        
+        /* --- Header --- */
+        .main-header {
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .main-header h1 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            font-weight: 700;
+        }
+        .main-header nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-left: 30px;
+            transition: color 0.2s;
+        }
+        .main-header nav a:hover, .main-header nav a.active {
+            color: var(--text-color);
+        }
+
+        /* --- Dashboard Grid --- */
+        .dashboard-content {
+            flex: 1;
+            padding: 0 40px 40px 40px;
+        }
+
+        /* Estilos Padrão de Card */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+        }
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        /* Força a cor correta e remove o azul feio */
+        .sidebar-nav a {
+            color: #A0A0A0 !important; /* Cinza (text-muted) */
+            text-decoration: none !important;
+            text-shadow: none !important; /* Remove o "glitch" */
+            filter: none !important;
+        }
+
+        /* Quando passa o mouse ou está ativo */
+        .sidebar-nav a:hover, 
+        .sidebar-nav a.active {
+            color: #F1F1F1 !important; /* Branco */
+            background-color: #353542 !important; /* Fundo do card */
+        }
+
+        /* Garante que o ícone dentro do link obedeça a cor */
+        .sidebar-nav a span {
+            color: inherit !important;
+        }
+        
+        /* Mantém o ícone de Admin rosa */
+        .sidebar-nav a[title="Admin Dashboard"] {
+            color: #9D4EDD !important;
+        }
+
+        .sidebar-profile-img {
+            width: 40px;  /* Tamanho ideal para sua sidebar de 80px */
+            height: 40px;
+            border-radius: 50%; /* Deixa redonda */
+            object-fit: cover;  /* Garante que a foto não fique esticada */
+            border: 2px solid #3f3f46; /* Borda sutil para destacar */
+            transition: all 0.2s ease;
+        }
+
+        /* Efeito ao passar o mouse: Borda Rosa */
+        .sidebar-nav a:hover .sidebar-profile-img {
+            border-color: #9D4EDD;
+            transform: scale(1.1);
+        }
+
+        /* --- Toasts de Notificação (A Nata) --- */
+        .django-messages {
+            position: fixed; top: 20px; right: 20px; z-index: 9999;
+        }
+        .message-toast {
+            padding: 15px 25px; margin-bottom: 10px; border-radius: 8px;
+            color: #fff; font-weight: 600; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            animation: slideIn 0.5s forwards, fadeOut 0.5s 5s forwards;
+            min-width: 300px;
+        }
+        .message-toast.success { background-color: #00C49F; border-left: 5px solid #009175; }
+        .message-toast.error { background-color: #E845A0; border-left: 5px solid #c22e82; }
+        .message-toast.warning { background-color: #FBBC05; border-left: 5px solid #d49e04; }
+
+        @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; visibility: hidden; } }
+
+    </style>
+</head>
+<body>
+    {% if messages %}
+        <div class="django-messages">
+            {% for message in messages %}
+                <div class="message-toast {{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <a href="{% url 'dashboard_home' %}">
+                <img src="{% static 'img/logoside.png' %}" alt="Media Scope" class="logo-img">
+            </a>        </div>
+
+       <nav class="sidebar-nav">
+    {% if request.user.is_superuser %}
+        <a href="{% url 'admin_dashboard' %}" 
+           class="{% if request.resolver_match.url_name == 'admin_dashboard' %}active{% endif %}" 
+           title="Admin Dashboard">
+            <span class="material-symbols-outlined">admin_panel_settings</span>
+        </a>
+
+        <a href="{% url 'admin_clients' %}" 
+           class="{% if request.resolver_match.url_name == 'admin_clients' %}active{% endif %}" 
+           title="Gerenciar Clientes">
+            <span class="material-symbols-outlined">groups</span>
+        </a>
+
+        <a href="{% url 'dashboard_home' %}" title="Ver como Usuário">
+            <span class="material-symbols-outlined">visibility</span>
+        </a>
+
+    {% else %}
+        <a href="{% url 'dashboard_home' %}" class="{% if request.resolver_match.url_name == 'dashboard_home' %}active{% endif %}" title="Dashboard">
+            <span class="material-symbols-outlined">monitoring</span>
+        </a>
+        
+        <a href="{% url 'planos' %}" class="{% if request.resolver_match.url_name == 'planos' %}active{% endif %}" title="Planos">
+            <span class="material-symbols-outlined">workspace_premium</span>
+        </a>
+
+        <a href="{% url 'sentiment_analysis' %}" class="{% if request.resolver_match.url_name == 'sentiment_analysis' %}active{% endif %}" title="Análise IA">
+            <span class="material-symbols-outlined">psychology</span>
+        </a>
+        
+        <a href="{% url 'settings' %}" class="{% if request.resolver_match.url_name == 'settings' %}active{% endif %}" title="Minha Conta">
+            {% if request.user.profile_picture %}
+                <img src="{{ request.user.profile_picture.url }}" alt="Perfil" class="sidebar-profile-img">
+            {% else %}
+                <img src="https://ui-avatars.com/api/?name={{ request.user.first_name|default:'User' }}+{{ request.user.last_name }}&background=random&color=fff&size=128" alt="Perfil" class="sidebar-profile-img">
+            {% endif %}
+        </a>
+    {% endif %}
+</nav>
+
+        <div class="sidebar-footer">
+            <a href="{% url 'logout' %}" title="Sair">
+                <span class="material-symbols-outlined">logout</span>
+            </a>
+        </div>
+    </aside>
+
+    <div class="main-container">
+        
+        <header class="main-header">
+            <h1>Media Scope</h1>
+            <nav>
+                <a href="{% url 'home' %}">Home</a>
+                
+                {% if request.user.is_authenticated %}
+                <span style="color: var(--text-muted); margin-left: 30px;">
+                    Olá, {{ request.user.first_name|default:request.user.email }}
+                </span>
+                {% endif %}
+                
+            </nav>
+        </header>
+        <main class="dashboard-content">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+</body>
+</html>

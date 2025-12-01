@@ -1,0 +1,451 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Scope</title>
+    <link rel="stylesheet" href="{% static 'css/LangPage.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<header>
+        <nav>
+            <a class="logo" href=""><img src="{% static 'img/logolp.png' %}" alt=""></a>
+            <div class="menu-sample">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+            
+               <ul class = 'nav-list'>
+                <li><a id="nav" href="#home">Home</a></li>
+                <li><a id="nav" href="#functions">Funcionalidades</a></li>
+                <li><a id="nav" href="#about">About</a></li>
+                {% if user.is_authenticated %}
+    <li>
+        <a class="Login" href="{% url 'dashboard_home' %}">
+            <button style="background-color: #9D4EDD; color: white;">Dashboard</button>
+        </a>
+    </li>
+{% else %}
+    <li>
+        <a class="Login" href="{% url 'login' %}">
+            <button>Login</button>
+        </a>
+    </li>
+{% endif %}
+
+            </ul>
+        </nav>
+    </header>
+<section class="home" id="home">
+    <div class="container_home">
+        <div class="text_space">
+            <div class="content_home">
+                <h2>Inteligência em redes <br>sociais para decisões <br>estratégicas</h2>
+                <a class="Experiment_now" href="#plans"><button>Experimente já!</button></a>
+            </div>
+        </div>
+
+        <div class="graphic_space">
+            <div class="dashboard-preview">
+                <div class="card-bar-chart">
+                    <div class="chart-title">Social media followers (30 days)</div>
+                    <div class="bars-container">
+                        <div class="bar" style="height: 45%;"></div>
+                        <div class="bar" style="height: 65%;"></div>
+                        <div class="bar" style="height: 90%;"></div>
+                        <div class="bar" style="height: 75%;"></div>
+                        <div class="bar" style="height: 55%;"></div>
+                        <div class="bar" style="height: 85%;"></div>
+                        <div class="bar active" style="height: 100%;"></div>
+                    </div>
+                </div>
+                
+                <div class="card-pie-chart"></div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="first_section">
+        <div class="first_section_container">
+            <div class="first_space">
+                <img src="{% static 'img/Image_first_section.png' %}" alt="">
+            </div>
+            <div class="second_space">
+                <div class="first_section_text">
+                <h2>Deixe as tarefas manuais para trás e se concentre no que importa</h2>
+                <p>Com o Media Scope, você ganha horas de produtividade todos os dias, 
+                com relatórios e dashboards automáticos que falam a língua do seu negócio. 
+                Experimente agora e veja como podemos impulsionar seus resultados.</p>
+                <a class="test_now" href="#plans"><button>Teste Já</button></a>
+                </div>
+            </div>
+        </div>
+    </section>
+<section class="second_section" id="functions">
+        <div class="tittle_space_second_section">
+            <h2>Funcionalidades desenhadas para <br>seu sucesso!</h2>
+        </div>
+        <div class="second_section_container">
+            <div class="three_space">
+                <img src="{% static 'img/grafico-3.jpg' %}" alt="">
+            </div>
+            <div class="four_space">
+                <div class="box_information_second_section">
+                    <h1>Monitoramento em Tempo Real</h1>
+                    <p>Rastreamento contínuo de menções, hashtags e concorrentes across todas as plataformas com atualizações instantâneas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+<section class="third_section">
+        <div class="third_section_container">
+            <div class="five_space">
+                <div class="box_information_third_section">
+                    <h1>Análise de sentimentos com IA</h1>
+                    <p>Classificação inteligente do tom das menções (positivo, neutro, negativo) usando processamento de linguagem natural avançado.</p>
+                </div></div>
+            <div class="six_space">
+                <img src="{% static 'img/grafico-4.jpg' %}" alt="">
+            </div>
+        </div>
+    </section>
+<section class="fourth_section">
+        <div class="fourth_section_container">
+            <div class="seven_space">
+                <div class="seven_space_img">
+                <img src="{% static 'img/image_fourth_section.1000px.png' %}" alt="">
+            </div></div>
+            <div class="eight_space">
+                <div class="box_information_fourth_section">
+                    <h1>Relatórios automatizados</h1>
+                    <p>Classificação inteligente do tom das menções (positivo, neutro, negativo) usando processamento de linguagem natural avançado.</p>    
+                </div>
+            </div>
+        </div>
+    </section>
+<div class="container_timeline" id="about">
+    <div class = "title_timeline">
+        <h1>Sobre Nós – “Nossa Jornada”</h1>
+        <p>Transformamos o ruído das redes em inteligência estratégica.</p>
+    </div>
+
+    <div class="timeline">
+        <div class="checkpoint">
+            <div>
+            <h2>História</h2>
+            <p>O Media Scope nasceu da necessidade de transformar o excesso de dados das redes sociais em 
+                informações claras e estratégicas. Criado inicialmente como um projeto voltado para pequenas e médias empresas, 
+                rapidamente se tornou uma solução acessível e escalável para quem busca compreender melhor o impacto digital.
+            </p>
+            </div>
+        </div>
+        <div class="checkpoint">
+            <div>
+            <h2>Missão</h2>
+            <p>Nossa missão é democratizar a análise de redes sociais, oferecendo 
+                ferramentas inteligentes e acessíveis que ajudam empresas e 
+                profissionais a tomarem decisões baseadas em dados reais.
+            </p>
+            </div>
+        </div>
+        <div class="checkpoint">
+            <div>
+            <h2>Visão & Valores</h2>
+            <p>Queremos ser referência em inteligência digital, expandindo cada vez 
+                 mais nossas soluções com inovação, ética e confiabilidade.
+            </p>
+            </div>
+        </div>
+        <div class="checkpoint">
+            <div>
+            <h2>Nossos valores se baseiam em:</h2>
+            <ul><li>Inovação, para oferecer sempre o que há de mais moderno;</li>
+                <li>Confiabilidade, garantindo dados precisos e seguros;</li>
+                <li>Transparência, para que nossos clientes confiem em cada insight.</li>
+            </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="container_plans" id="plans">
+
+    <div class="tittle_paragraf_plans">
+    <h1>Simples preços, <br>poderosos planos</h1>
+    <p>Simples, transparente preço que cresce junto com você.</p>
+
+    <div class="toggle-container">
+      <button id="btnMensal" class="toggle-btn active">Mensal</button>
+      <button id="btnAnual" class="toggle-btn">Anual</button>
+    </div></div>
+
+    <div class="planos" id="plans">
+        
+        {% for plan in plans %}
+        <div class="plano">
+            <div class="top_plans">
+                <div class="top_plans_img">
+                    <img src="{% static 'img/icons_planos (3).png' %}" alt="">
+                </div>
+                
+                <p>{{ plan.name }}</p>
+                
+                <p class="price" 
+                   data-monthly="{{ plan.price_monthly|floatformat:0 }}" 
+                   data-annual="{{ plan.price_annual|floatformat:0 }}">
+                   R${{ plan.price_monthly|floatformat:0 }}<span>/mês</span>
+                </p>
+            </div>
+
+            <ul>
+                {% if plan.name == 'Free' or plan.name == 'Essential' %}
+                    <li><img src="{% static 'img/img_confere.png' %}" alt="">Dashboard básico</li>
+                    <li><img src="{% static 'img/img_confere.png' %}" alt="">Análise de sentimentos</li>
+                    <li><img src="{% static 'img/img_confere.png' %}" alt="">Alertas por email</li>
+                    <li><img src="{% static 'img/img_confere.png' %}" alt="">5.000 menções/mês</li>
+                    <li><img src="{% static 'img/img_confere.png' %}" alt="">1 Usuário</li>
+
+                {% elif plan.name == 'Pro' or plan.name == 'Professional' %}
+                    <li><img src="{% static 'img/img_confere.png' %}" alt="">20.000 menções/mês</li>
+                    <li><img src="{% static 'img/img_confere.png' %}" alt="">Dashboards ilimitados</li>
+                    <li><img src="{% static 'img/img_confere.png' %}" alt="">Suporte prioritário</li>
+                    <li><img src="{% static 'img/img_confere.png' %}" alt="">Análise avançada</li>
+                    <li><img src="{% static 'img/img_confere.png' %}" alt="">Alertas multi-canais</li>
+
+                {% elif plan.name == 'Enterprise' %}
+                    <li><img src="{% static 'img/img_confere.png' %}" alt="">Menções ilimitadas</li>
+                    <li><img src="{% static 'img/img_confere.png' %}" alt="">Análise preditiva com IA</li>
+                    <li><img src="{% static 'img/img_confere.png' %}" alt="">Suporte dedicado</li>
+                    <li><img src="{% static 'img/img_confere.png' %}" alt="">Segurança enterprise</li>
+                    <li><img src="{% static 'img/img_confere.png' %}" alt="">Alertas 24/7</li>
+                
+                {% else %}
+                    <li><img src="{% static 'img/img_confere.png' %}" alt="">Acesso ao sistema</li>
+                {% endif %}
+            </ul>
+
+            <a href="{% url 'login' %}?next={% url 'upgrade_plan' plan.id %}" class="btn-begnning btn-upgrade-link">
+                {% if plan.price_monthly == 0 %}
+                    Começar Grátis
+                {% else %}
+                    Comece agora
+                {% endif %}
+            </a>
+        </div>
+        {% endfor %}
+
+    </div>
+    
+</section>
+<section class="reviews_section" style="background-color: var(--secondery_color_background);">
+  <div class="reviews_container">
+
+    <div class="tittle_review_section">
+      <h2>Veja os resultados de nossos clientes</h2>
+    </div>
+
+    <div class="review_card">
+      <div class="review_header">
+        <div>
+          <h3>John D.</h3>
+          <p class="job">Company CEO</p>
+        </div>
+      </div>
+
+      <div class="review_stars" aria-hidden="true">★★★★★</div>
+
+      <p class="review_text short">
+        I've been consistently impressed with the quality of service provided by this website. They have exceeded my expectations and delivered exceptional results...
+      </p>
+
+      <div class="review_text full">
+        <p>
+          I've been consistently impressed with the quality of service provided by this website. They have exceeded my expectations and delivered exceptional results.
+          The team is extremely professional and fast. Highly recommended!
+        </p>
+      </div>
+    </div>
+
+    <div class="review_card">
+      <div class="review_header">
+        <div>
+          <h3>Maria S.</h3>
+          <p class="job">Marketing Manager</p>
+        </div>
+      </div>
+
+      <div class="review_stars" aria-hidden="true">★★★★☆</div>
+
+      <p class="review_text short">
+        The platform helped our company streamline processes and grow our results...
+      </p>
+
+      <div class="review_text full">
+        <p>
+          The platform helped our company streamline processes and grow our results. 
+          The support team is fantastic, fast, and very committed to solving any issue. Amazing!
+        </p>
+      </div>
+    </div>
+
+    <div class="review_card">
+      <div class="review_header">
+        <div>
+          <h3>Lucas R.</h3>
+          <p class="job">Entrepreneur</p>
+        </div>
+      </div>
+
+      <div class="review_stars" aria-hidden="true">★★★★★</div>
+
+      <p class="review_text short">
+        Excellent experience! Completely improved our efficiency and workflow...
+      </p>
+
+      <div class="review_text full">
+        <p>
+          Excellent experience! Completely improved our efficiency and workflow. The team is highly dedicated, 
+          knowledgeable, and extremely organized. I would 100% recommend!
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<section class="fifth_section">
+    <div class="fifth_section_container">
+        <div class="nine_space">
+            <div class="fifth_section_img">
+            <img src="{% static 'img/last_section_img.png' %}" alt=""></div>
+        </div>
+        <div class="ten_space">
+            <div class="title_ten_space">
+            <h2>Transforme visualizações em <br>
+                estratégias com a Mídia Scope</h2></div>
+            <div class="paragrafan_ten_space">
+            <p>A Mídia Scope foi criada para quem quer transformar <br>
+                dados de conteúdo digital em resultados concretos. <br>
+                Com dashboards inteligentes e relatórios automáticos, <br>
+                você acompanha o desempenho de seus vídeos, <br>
+                campanhas e audiências de forma prática e visual. <br>
+
+                <br>Descubra quais conteúdos mais engajam, quais <br>
+                formatos geram maior retenção e como otimizar sua <br>
+                presença nas plataformas de vídeo. <br>
+                
+                <br>Com análises automáticas e espaço para observações <br>
+                personalizadas, você ganha tempo e apresenta <br>
+                resultados com clareza e impacto. <br>
+                Mídia Scope — dados que contam histórias, estratégias <br> 
+                que geram crescimento.</p> <br></div>
+        </div>
+    </div>
+</section>
+
+
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-section info-links">
+            <h2>Informações</h2>
+            <div class="links-container">
+                <ul class="links-column">
+                    <li><a href="{% url 'login' %}">Produtos</a></li>
+                    <li><a href="{% url 'login' %}">Monitoramento</a></li>
+                    <li><a href="{% url 'login' %}">Atendimento</a></li>
+                    <li><a href="{% url 'login' %}">Analytics</a></li>
+                    <li><a href="{% url 'login' %}">Publicador</a></li>
+                    <li><a href="{% url 'login' %}">Dashboards</a></li>
+                    <li><a href="{% url 'login' %}">Analytics</a></li>
+                </ul>
+                <ul class="links-column">
+                    <li><a href="{% url 'login' %}">Serviços</a></li>
+                    <li><a href="{% url 'login' %}">Preços</a></li>
+                    <li><a href="{% url 'login' %}">Clientes</a></li>
+                    <li><a href="{% url 'login' %}">Blog</a></li>
+                    <li><a href="{% url 'login' %}">Trial</a></li>
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a href="{% url 'login' %}">Status</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-section contact-social">
+            <h2>Conheça nossos colaboradores</h2>
+            <div class="social-icons">
+                <a href="#" class="social-icon youtube"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="social-icon facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon x-twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon linkedin"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <div class="contact-info">
+                <p><i class="fas fa-phone-alt"></i> (11) 2571- 2569</p>
+                <p><i class="fas fa-envelope"></i> contato@mediascope.com.br</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="{% static 'js/LangPage.js' %}"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const btnMensal = document.getElementById('btnMensal');
+        const btnAnual = document.getElementById('btnAnual');
+        const prices = document.querySelectorAll('.price');
+        const buyButtons = document.querySelectorAll('.btn-upgrade-link');
+
+        if(btnMensal && btnAnual) {
+            btnMensal.addEventListener('click', function() {
+                // Estilo dos botões
+                btnMensal.classList.add('active');
+                btnAnual.classList.remove('active');
+
+                // Atualiza Preços para Mensal
+                prices.forEach(price => {
+                    const val = price.getAttribute('data-monthly');
+                    price.innerHTML = `R$${val}<span>/mês</span>`;
+                });
+
+                // Atualiza Links para Mensal (remove ?period=annual se existir)
+                buyButtons.forEach(btn => {
+                    let url = btn.getAttribute('href');
+                    // Remove qualquer parametro de período anterior
+                    url = url.replace('&period=annual', '').replace('?period=annual', '');
+                    // Se já tiver querystring, usa &, senão ?
+                    const separator = url.includes('?') ? '&' : '?';
+                    btn.setAttribute('href', url + separator + 'period=monthly');
+                });
+            });
+
+            btnAnual.addEventListener('click', function() {
+                // Estilo dos botões
+                btnAnual.classList.add('active');
+                btnMensal.classList.remove('active');
+
+                // Atualiza Preços para Anual (Multiplica por 12 no JS para garantir visual, mas a lógica de venda é backend)
+                prices.forEach(price => {
+                    const monthlyVal = parseFloat(price.getAttribute('data-annual'));
+                    // Se quiser mostrar o total anual:
+                    const total = Math.round(monthlyVal * 12);
+                    price.innerHTML = `R$${total}<span>/ano</span>`;
+                });
+
+                // Atualiza Links para Anual
+                buyButtons.forEach(btn => {
+                    let url = btn.getAttribute('href');
+                    url = url.replace('&period=monthly', '').replace('?period=monthly', '');
+                    const separator = url.includes('?') ? '&' : '?';
+                    btn.setAttribute('href', url + separator + 'period=annual');
+                });
+            });
+        }
+    });
+</script>
+
+</body>
+</html>

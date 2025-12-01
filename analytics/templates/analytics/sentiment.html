@@ -1,0 +1,221 @@
+{% extends "analytics/base.html" %}
+{% load static %}
+
+{% block title %}Análise de Sentimentos - Media Scope{% endblock %}
+
+{% block content %}
+<style>
+    .sentiment-container {
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+    .header-box h2 {
+        color: var(--primary);
+        margin-bottom: 10px;
+    }
+    .search-box {
+        background-color: var(--card-bg);
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        margin-bottom: 30px;
+    }
+    .custom-select {
+        width: 100%;
+        padding: 12px;
+        background-color: var(--bg-color);
+        border: 1px solid #444;
+        color: var(--text-color);
+        border-radius: 8px;
+        font-size: 1rem;
+        margin-bottom: 20px;
+    }
+    .btn-analyze {
+        width: 100%;
+        padding: 15px;
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    .btn-analyze:hover {
+        background-color: #7b2cbf;
+    }
+
+    /* Estilos dos Cards de Resultado */
+    .results-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+    .stat-card {
+        background-color: var(--card-bg);
+        padding: 20px;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: var(--shadow);
+    }
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin: 10px 0;
+    }
+    .stat-label { color: var(--text-muted); }
+    
+    .pos { color: #00C49F; }
+    .neu { color: #FFBB28; }
+    .neg { color: #FF8042; }
+
+    /* Área de Comentários */
+    .comments-section {
+        background-color: var(--card-bg);
+        padding: 25px;
+        border-radius: 12px;
+    }
+    .comment-item {
+        border-bottom: 1px solid #444;
+        padding: 15px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .comment-text { color: #ddd; font-style: italic; }
+    .comment-badge {
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        color: #121212;
+    }
+</style>
+
+<div class="sentiment-container">
+    
+    <div class="header-box">
+        <h2>Inteligência Artificial de Sentimentos</h2>
+        <p style="color: var(--text-muted);">Descubra o que seu público realmente sente sobre seu conteúdo.</p>
+    </div>
+    <br>
+
+    {% if summary %}
+        <div class="results-area">
+            <h3 style="margin-bottom: 20px;">Resultados para: <span style="color: var(--primary);">{{ video_title }}</span></h3>
+            
+            <div class="results-grid">
+                <div class="stat-card">
+                    <span class="material-symbols-outlined pos">sentiment_satisfied</span>
+                    <div class="stat-number pos">{{ summary.positive }}</div>
+                    <div class="stat-label">Comentários Positivos</div>
+                </div>
+                <div class="stat-card">
+                    <span class="material-symbols-outlined neu">sentiment_neutral</span>
+                    <div class="stat-number neu">{{ summary.neutral }}</div>
+                    <div class="stat-label">Comentários Neutros</div>
+                </div>
+                <div class="stat-card">
+                    <span class="material-symbols-outlined neg">sentiment_dissatisfied</span>
+                    <div class="stat-number neg">{{ summary.negative }}</div>
+                    <div class="stat-label">Comentários Negativos</div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-bottom: 40px;">
+                <a href="{% url 'sentiment_analysis' %}" class="btn-analyze" style="text-decoration: none; display: inline-block; width: auto; padding: 10px 30px;">
+                    Analisar Outro Vídeo
+                </a>
+            </div>
+
+            <div class="comments-section">
+                <h3>Amostra de Comentários Analisados</h3>
+                <br>
+                {% for comment in comments|slice:":5" %}
+                <div class="comment-item">
+                    <div style="max-width: 80%;">
+                        <div class="comment-text">"{{ comment.original }}"</div>
+                        <div style="font-size: 0.8rem; color: #777; margin-top: 5px;">Traduzido: {{ comment.translated }}</div>
+                    </div>
+                    <div>
+                        {% if comment.sentiment > 0.1 %}
+                            <span class="comment-badge" style="background: #00C49F;">Positivo</span>
+                        {% elif comment.sentiment < -0.1 %}
+                            <span class="comment-badge" style="background: #FF8042;">Negativo</span>
+                        {% else %}
+                            <span class="comment-badge" style="background: #FFBB28;">Neutro</span>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    {% else %}
+        <div class="search-box" id="analysis-form-container">
+            <form method="POST" id="sentiment-form">
+                {% csrf_token %}
+                
+                {% if user_videos %}
+                    <label style="display: block; margin-bottom: 10px; color: var(--text-muted);">Selecione um vídeo recente:</label>
+                    <select name="video_id" class="custom-select" required>
+                        <option value="" disabled selected>Escolha um vídeo...</option>
+                        {% for video in user_videos %}
+                            <option value="{{ video.id }}">{{ video.title }}</option>
+                        {% endfor %}
+                    </select>
+                    
+                    <button type="submit" class="btn-analyze">
+                        <span class="material-symbols-outlined" style="vertical-align: middle; margin-right: 5px;">psychology</span>
+                        Iniciar Análise com IA
+                    </button>
+                {% else %}
+                    <div style="text-align: center; padding: 20px;">
+                        <p style="color: #E845A0; margin-bottom: 15px;">Não encontramos vídeos no seu canal.</p>
+                        <a href="{% url 'settings' %}" style="color: var(--primary);">Verifique sua conexão com o Google nas Configurações</a>
+                    </div>
+                {% endif %}
+            </form>
+            
+            {% if error %}
+                <div style="background: rgba(232, 69, 160, 0.1); color: #E845A0; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                    <strong>Ops!</strong> {{ error }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div id="loading-container" style="display: none; text-align: center; padding: 60px 20px;">
+            <img src="{% static 'img/loading.gif' %}" alt="Carregando..." style="width: 80px; height: auto; margin-bottom: 20px;">
+            
+            <h2 style="color: #fff;">Analisando Comentários...</h2>
+            <p style="color: #a0a0a0; margin-top: 10px;">A IA está lendo, traduzindo e classificando sentimentos.</p>
+            <p style="color: var(--primary); font-size: 0.9rem; margin-top: 5px;">Isso pode levar alguns segundos.</p>
+        </div>
+
+    {% endif %}
+
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('sentiment-form');
+        const formContainer = document.getElementById('analysis-form-container');
+        const loadingContainer = document.getElementById('loading-container');
+
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                // NÃO usamos e.preventDefault() aqui, senão o formulário não envia!
+                
+                // Apenas trocamos a visualização
+                if (formContainer) formContainer.style.display = 'none';
+                if (loadingContainer) loadingContainer.style.display = 'block';
+                
+                // O navegador continua o processo de envio (POST) normalmente
+            });
+        }
+    });
+</script>
+
+{% endblock %}
