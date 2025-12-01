@@ -1,0 +1,167 @@
+~/workspace$ git pull --rebase origin main
+fatal: couldn't find remote ref main
+~/workspace$ git push origin main
+Enumerating objects: 121, done.
+Counting objects: 100% (121/121), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (98/98), done.
+Writing objects: 100% (121/121), 3.11 MiB | 11.65 MiB/s, done.
+Total 121 (delta 20), reused 105 (delta 13), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (20/20), done.
+remote: fatal: did not receive expected object 777beddd4d34240992536b4009a7e613eddd1c0c
+error: remote unpack failed: index-pack failed
+To https://github.com/devjohnnydev/TEMA-1MediaScope
+ ! [remote rejected] main -> main (failed)
+error: failed to push some refs to 'https://github.com/devjohnnydev/TEMA-1MediaScope'
+~/workspace$ ^C
+~/workspace$ git rev-parse --is-shallow-repository
+true
+~/workspace$ git fetch --unshallow origin
+~/workspace$ git gc
+git repack -a -d -f
+Enumerating objects: 124, done.
+Counting objects: 100% (124/124), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (101/101), done.
+Writing objects: 100% (124/124), done.
+Total 124 (delta 23), reused 105 (delta 13), pack-reused 0 (from 0)
+Enumerating objects: 124, done.
+Counting objects: 100% (124/124), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (114/114), done.
+Writing objects: 100% (124/124), done.
+Total 124 (delta 23), reused 101 (delta 0), pack-reused 0 (from 0)
+~/workspace$ git push --no-thin origin main
+Enumerating objects: 121, done.
+Counting objects: 100% (121/121), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (93/93), done.
+Writing objects: 100% (121/121), 3.11 MiB | 10.86 MiB/s, done.
+Total 121 (delta 20), reused 118 (delta 18), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (20/20), done.
+remote: fatal: did not receive expected object 777beddd4d34240992536b4009a7e613eddd1c0c
+error: remote unpack failed: index-pack failed
+To https://github.com/devjohnnydev/TEMA-1MediaScope
+ ! [remote rejected] main -> main (failed)
+error: failed to push some refs to 'https://github.com/devjohnnydev/TEMA-1MediaScope'
+~/workspace$ rm -rf .git
+git init
+git add .
+git commit -m "Initial commit - Media Scope Django Project"
+git branch -M main
+git remote add origin https://github.com/devjohnnydev/TEMA-1MediaScope.git
+git push -u origin main --force
+Initialized empty Git repository in /home/runner/workspace/.git/
+[main (root-commit) 1b7ae21] Initial commit - Media Scope Django Project
+ 100 files changed, 8117 insertions(+)
+ create mode 100644 .env.example
+ create mode 100644 .gitignore
+ create mode 100644 .replit
+ create mode 100644 Procfile
+ create mode 100644 README.md
+ create mode 100644 accounts/__init__.py
+ create mode 100644 accounts/admin.py
+ create mode 100644 accounts/apps.py
+ create mode 100644 accounts/forms.py
+ create mode 100644 accounts/managers.py
+ create mode 100644 accounts/migrations/0001_initial.py
+ create mode 100644 accounts/migrations/0002_customuser_country_customuser_google_profile_picture_and_more.py
+ create mode 100644 accounts/migrations/0003_customuser_email_digest_customuser_marketing_emails_and_more.py
+ create mode 100644 accounts/migrations/__init__.py
+ create mode 100644 accounts/models.py
+ create mode 100644 accounts/pipeline.py
+ create mode 100644 accounts/templates/accounts/auth.html
+ create mode 100644 accounts/templates/accounts/dashboard.html
+ create mode 100644 accounts/templates/accounts/password_reset.html
+ create mode 100644 accounts/templates/accounts/password_reset_complete.html
+ create mode 100644 accounts/templates/accounts/password_reset_confirm.html
+ create mode 100644 accounts/templates/accounts/password_reset_done.html
+ create mode 100644 accounts/templates/accounts/password_reset_email.html
+ create mode 100644 accounts/templates/accounts/settings.html
+ create mode 100644 accounts/tests.py
+ create mode 100644 accounts/urls.py
+ create mode 100644 accounts/views.py
+ create mode 100644 analytics/__init__.py
+ create mode 100644 analytics/admin.py
+ create mode 100644 analytics/apps.py
+ create mode 100644 analytics/forms.py
+ create mode 100644 analytics/migrations/0001_initial.py
+ create mode 100644 analytics/migrations/0002_remove_profile_default_video_id.py
+ create mode 100644 analytics/migrations/__init__.py
+ create mode 100644 analytics/models.py
+ create mode 100644 analytics/templates/analytics/base.html
+ create mode 100644 analytics/templates/analytics/index.html
+ create mode 100644 analytics/templates/analytics/sentiment.html
+ create mode 100644 analytics/templates/analytics/settings.html
+ create mode 100644 analytics/tests.py
+ create mode 100644 analytics/urls.py
+ create mode 100644 analytics/views.py
+ create mode 100644 analytics/youtube_service.py
+ create mode 100644 attached_assets/Pasted-ProgrammingError-at-relation-subscriptions-plan-does-not-exist-LINE-1-ce-annual-subscri-1764615264895_1764615264897.txt
+ create mode 100644 config/__init__.py
+ create mode 100644 config/asgi.py
+ create mode 100644 config/settings.py
+ create mode 100644 config/urls.py
+ create mode 100644 config/wsgi.py
+ create mode 100644 core/__init__.py
+ create mode 100644 core/admin.py
+ create mode 100644 core/apps.py
+ create mode 100644 core/migrations/__init__.py
+ create mode 100644 core/models.py
+ create mode 100644 core/templates/core/admin_clients.html
+ create mode 100644 core/templates/core/admin_dashboard.html
+ create mode 100644 core/templates/core/base_public.html
+ create mode 100644 core/templates/core/landing.html
+ create mode 100644 core/templates/core/planos.html
+ create mode 100644 core/tests.py
+ create mode 100644 core/urls.py
+ create mode 100644 core/views.py
+ create mode 100644 manage.py
+ create mode 100644 nixpacks.toml
+ create mode 100644 railway.json
+ create mode 100644 replit.md
+ create mode 100644 requirements.txt
+ create mode 100644 runtime.txt
+ create mode 100644 static/css/LangPage.css
+ create mode 100644 static/img/Image_first_section.png
+ create mode 100644 static/img/footer.jpeg
+ create mode 100644 static/img/fundo.png
+ create mode 100644 static/img/grafico-1.jpg
+ create mode 100644 static/img/grafico-2.jpg
+ create mode 100644 static/img/grafico-3.jpg
+ create mode 100644 static/img/grafico-4.jpg
+ create mode 100644 static/img/icons_planos (1).png
+ create mode 100644 static/img/icons_planos (2).png
+ create mode 100644 static/img/icons_planos (3).png
+ create mode 100644 static/img/image_fourth_section.1000px.png
+ create mode 100644 static/img/img_confere.png
+ create mode 100644 static/img/last_section_img.png
+ create mode 100644 static/img/loading.gif
+ create mode 100644 static/img/logo.png
+ create mode 100644 static/img/logolp.png
+ create mode 100644 static/img/logoside.png
+ create mode 100644 static/js/LangPage.js
+ create mode 100644 subscriptions/__init__.py
+ create mode 100644 subscriptions/admin.py
+ create mode 100644 subscriptions/apps.py
+ create mode 100644 subscriptions/management/commands/__init__.py
+ create mode 100644 subscriptions/management/commands/setup_plans.py
+ create mode 100644 subscriptions/migrations/0001_initial.py
+ create mode 100644 subscriptions/migrations/0002_payment.py
+ create mode 100644 subscriptions/migrations/__init__.py
+ create mode 100644 subscriptions/models.py
+ create mode 100644 subscriptions/tests.py
+ create mode 100644 subscriptions/urls.py
+ create mode 100644 subscriptions/views.py
+ create mode 100644 test_email.py
+Enumerating objects: 111, done.
+Counting objects: 100% (111/111), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (102/102), done.
+Writing objects: 100% (111/111), 3.11 MiB | 8.81 MiB/s, done.
+Total 111 (delta 10), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (10/10), done.
+To https://github.com/devjohnnydev/TEMA-1MediaScope.git
+ * [new branch]      main -> main
+branch 'main' set up to track 'origin/main'.
+~/workspace$ 
