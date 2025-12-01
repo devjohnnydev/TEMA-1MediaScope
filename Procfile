@@ -1,1 +1,1 @@
-web: bash -c 'python manage.py migrate --noinput && python manage.py createcachetable --verbosity 0 || true && python manage.py collectstatic --noinput && gunicorn config.wsgi --bind 0.0.0.0:$PORT --timeout 120'
+web: gunicorn config.wsgi --bind 0.0.0.0:$PORT --timeout 120
