@@ -1,0 +1,60 @@
+Region: us-east4]
+==============
+Using Nixpacks
+==============
+
+context: jgvf-x4C8
+╔══════════════════════════════ Nixpacks v1.38.0 ══════════════════════════════╗
+║ setup      │ python311, gcc                                                  ║
+║──────────────────────────────────────────────────────────────────────────────║
+║ install    │ pip install -r requirements.txt                                 ║
+║──────────────────────────────────────────────────────────────────────────────║
+║ start      │ python manage.py migrate --noinput && python manage.py          ║
+║            │ createcachetable --verbosity 0 || true && python manage.py      ║
+║            │ collectstatic --noinput && gunicorn config.wsgi --bind          ║
+║            │ 0.0.0.0:$PORT --timeout 120                                     ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+internal
+load build definition from Dockerfile
+0ms
+
+internal
+load metadata for ghcr.io/railwayapp/nixpacks:ubuntu-1745885067
+80ms
+
+internal
+load .dockerignore
+0ms
+
+internal
+load build context
+0ms
+
+stage-0
+COPY .nixpacks/nixpkgs-bc8f8d1be58e8c8383e683a06e1e1e57893fff87.nix .nixpacks/nixpkgs-bc8f8d1be58e8c8383e683a06e1e1e57893fff87.nix
+69ms
+
+stage-0
+RUN nix-env -if .nixpacks/nixpkgs-bc8f8d1be58e8c8383e683a06e1e1e57893fff87.nix && nix-collect-garbage -d
+33s
+23 store paths deleted, 245.31 MiB freed
+
+stage-0
+COPY . /app/.
+124ms
+
+stage-0
+RUN pip install -r requirements.txt
+105ms
+/bin/bash: line 1: pip: command not found
+Dockerfile:20
+-------------------
+18 |     ENV NIXPACKS_PATH=/opt/venv/bin:$NIXPACKS_PATH
+19 |     COPY . /app/.
+20 | >>> RUN --mount=type=cache,id=s/e9f9aa6e-0b73-4e2f-bd01-9c24fa14c706-/root/cache/pip,target=/root/.cache/pip pip install -r requirements.txt
+21 |
+22 |
+-------------------
+ERROR: failed to build: failed to solve: process "/bin/bash -ol pipefail -c pip install -r requirements.txt" did not complete successfully: exit code: 127
+Error: Docker build failed
