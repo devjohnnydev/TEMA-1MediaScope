@@ -15,8 +15,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-RUN python manage.py collectstatic --noinput || true
+RUN chmod +x start.sh
 
 EXPOSE 5000
 
-CMD ["sh", "-c", "python manage.py migrate --noinput && python manage.py createcachetable --verbosity 0 || true && gunicorn config.wsgi --bind 0.0.0.0:${PORT:-5000} --timeout 120"]
+CMD ["./start.sh"]
