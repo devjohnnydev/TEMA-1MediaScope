@@ -2,43 +2,22 @@
 set -e
 
 echo "=== Starting Media Scope ==="
+echo "PORT: ${PORT:-5000}"
+echo "DEBUG: ${DEBUG:-not set}"
 
-echo "Waiting for database..."
-python << END
-import os
-import time
-import dj_database_url
+if [ -z "$DATABASE_URL" ]; then
+    echo "ERROR: DATABASE_URL is not set!"
+    echo "Please configure DATABASE_URL in Railway Variables"
+    exit 1
+fi
 
-database_url = os.getenv('DATABASE_URL')
-if database_url:
-    print(f"Database URL configured: {database_url[:30]}...")
-    import psycopg2
-    db_config = dj_database_url.parse(database_url)
-    max_retries = 30
-    for i in range(max_retries):
-        try:
-            conn = psycopg2.connect(
-                host=db_config['HOST'],
-                port=db_config['PORT'],
-                user=db_config['USER'],
-                password=db_config['PASSWORD'],
-                dbname=db_config['NAME'],
-                sslmode='require' if 'sslmode' not in database_url else None
-            )
-            conn.close()
-            print("Database connection successful!")
-            break
-        except Exception as e:
-            print(f"Attempt {i+1}/{max_retries}: Waiting for database... ({e})")
-            time.sleep(2)
-    else:
-        print("Warning: Could not connect to database after retries")
-else:
-    print("No DATABASE_URL configured, using SQLite fallback")
-END
+echo "DATABASE_URL configured (first 50 chars): ${DATABASE_URL:0:50}..."
 
 echo "Running migrations..."
-python manage.py migrate --noinput
+python manage.py migrate --noinput || {
+    echo "Migration failed! Check DATABASE_URL configuration."
+    exit 1
+}
 
 echo "Creating cache table..."
 python manage.py createcachetable --verbosity 0 || true
